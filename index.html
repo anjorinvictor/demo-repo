@@ -3,9 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Energy Insights Vol 1 - Student Energy UNILAG</title>
+    <!-- Fonts: Merriweather for body (Academic feel) + Montserrat for headers -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --se-teal: #00A99D;
+            --se-yellow: #FFC20E;
+            --se-navy: #1B2631;
+            --text-dark: #2C3E50;
+            --text-light: #566573;
+            --bg-gray: #F4F6F7;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #555;
+            font-family: 'Merriweather', serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* The Page - A4 Portrait */
+        .page {
+            width: 794px; /* A4 width in px at 96dpi approx */
+            height: 1123px; /* A4 height */
+            background-color: var(--white);
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Ensures no spillover */
+        }
+
+        /* --- HEADER --- */
+        header {
+            border-bottom: 3px solid var(--se-yellow);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .brand-block h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            color: var(--se-navy);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .brand-block h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--se-teal);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-block {
+            text-align: right;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--text-light);
+            border-left: 1px solid #ddd;
+            padding-left: 15px;
+        }
+
+        .meta-block strong { color: var(--se-navy); display: block; }
+
+        /* --- EDITOR'S INSIGHT (Gray Box) --- */
+        .editors-insight {
+            background-color: var(--bg-gray);
+            border-left: 4px solid var(--se-navy);
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .section-label {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--se-teal);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .editors-text {
+            font-size: 10px; /* Adjusted for dense content */
+            line-height: 1.5;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        /* --- MAIN CONTENT LAYOUT --- */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* 2/3 Main text, 1/3 Sidebar */
+            gap: 25px;
+            flex-grow: 1;
+        }
+
+        /* Left Column */
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--se-navy);
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .article-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 11px;
+            color: var(--se-teal);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .body-text {
+            font-size: 10px;
+            line-height: 1.6;
+            color: #333;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        .body-text p { margin-bottom: 10px; }
+
+        /* Highlight Box in Main Text */
+        .highlight-box {
+            border: 1px solid var(--se-teal);
+            border-radius: 4px;
+            padding: 10px;
+            margin: 15px 0;
+            background: #F0FCFB;
+        }
+        .highlight-box h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--se-navy);
+            margin-bottom: 5px;
+        }
+        .highlight-box p {
+            font-size: 9px;
+            margin-bottom: 0;
+        }
+        
+        /* Secondary Article Style */
+        .secondary-article {
+            margin-top: 20px;
+            border-top: 2px solid var(--se-yellow);
+            padding-top: 15px;
+        }
+        
+        .secondary-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--se-navy);
+            margin-bottom: 5px;
+        }
+
+        /* Right Column (Sidebar) */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: var(--se-navy);
+            color: white;
+            padding: 15px;
+            border-radius: 0; /* Sharp edges for academic look */
+        }
+
+        .sidebar-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            border-bottom: 1px solid var(--se-teal);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            color: var(--se-yellow);
+        }
+
+        .stat-list {
+            list-style: none;
+        }
+        .stat-list li {
+            font-size: 9px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: flex;
+            gap: 8px;
+        }
+        .stat-list li i { color: var(--se-teal); margin-top: 2px; }
+
+        .takeaways-card {
+            border: 2px solid var(--se-yellow);
+            padding: 15px;
+            background: white;
+        }
+        .takeaways-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: var(--se-navy);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        .check-list li {
+            font-size: 9px;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+            list-style: none;
+            position: relative;
+            padding-left: 15px;
+        }
+        .check-list li::before {
+            content: '✓';
+            color: var(--se-teal);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .events-card {
+            background: var(--bg-gray);
+            padding: 15px;
+            border-top: 4px solid var(--se-teal);
+        }
+        .event-item {
+            margin-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+        .event-date {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 9px;
+            color: var(--se-teal);
+        }
+        .event-name {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--se-navy);
+        }
+
+        /* References Section */
+        .references {
+            margin-top: auto;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            font-size: 8px;
+            color: #777;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--se-teal);
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .social-icons {
+            font-size: 10px;
+        }
+        .social-icons i { margin-left: 8px; }
+
+    </style>
 </head>
 <body>
-    
+
+    <div class="page">
+        <!-- HEADER -->
+        <header>
+            <div class="brand-block">
+                <h1>Energy Insights</h1>
+                <h2>Renewable Energy & Power Systems</h2>
+            </div>
+            <div class="meta-block">
+                <strong>Volume 1 | Jan 2026</strong>
+                Student Energy UNILAG<br>
+                Prepared by: Anjorin Olamide
+            </div>
+        </header>
+
+        <!-- EDITOR'S NOTE -->
+        <div class="editors-insight">
+            <span class="section-label">Editor's Insight</span>
+            <p class="editors-text">
+                "Nigeria’s energy challenge goes beyond power generation—it involves sustainability, access, and resilience. As the global energy sector transitions toward cleaner systems, renewable energy and improved power infrastructure present practical solutions for Nigeria and Africa. This edition highlights how decentralized renewable technologies can improve electricity access while supporting sustainable development."
+            </p>
+        </div>
+
+        <!-- MAIN LAYOUT -->
+        <div class="main-layout">
+            
+            <!-- Left Column: Content -->
+            <div class="main-content">
+                <span class="section-label" style="color:var(--se-navy); border-bottom: 2px solid var(--se-yellow); display:inline-block; margin-bottom:10px;">ENERGY DEEP DIVE</span>
+                
+                <h3 class="article-title">Renewable Energy and Power Access in Nigeria</h3>
+                <h4 class="article-sub">A Pathway to Decentralization</h4>
+
+                <div class="body-text">
+                    <p>Nigeria faces persistent electricity shortages despite abundant energy resources. Renewable energy, particularly solar power, offers a scalable and sustainable pathway to improve power access. High solar irradiation across the country makes solar photovoltaic systems especially viable.</p>
+                    
+                    <p>Decentralized solutions such as solar mini-grids and standalone systems reduce reliance on the national grid, lower transmission losses, and improve reliability in underserved areas. Research indicates that access to clean energy enhances economic activity, healthcare delivery, and educational outcomes.</p>
+
+                    <!-- Innovation Highlight Box -->
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-lightbulb" style="color:var(--se-yellow)"></i> Innovation Highlight: Smart Grids</h4>
+                        <p>Battery storage and smart grid technologies improve renewable energy reliability by enabling energy balancing, efficient distribution, and real-time system monitoring. This is crucial for managing the intermittent nature of solar and wind resources.</p>
+                    </div>
+
+                    <p>Key barriers include high upfront costs, policy inconsistencies, and limited technical capacity. Addressing these challenges through stable policies, investment incentives, and local skill development is essential for accelerating Nigeria’s energy transition.</p>
+
+                    <h4 style="font-family:'Montserrat', sans-serif; font-size:11px; margin-top:15px; color:var(--se-navy);">Focus: Nigeria & Africa</h4>
+                    <p>Renewable energy projects across Africa are expanding rapidly. In Nigeria, solar mini-grids supported by public–private partnerships are replacing diesel generators in rural communities. These projects improve energy reliability, reduce emissions, and create employment opportunities.</p>
+                </div>
+                
+                <!-- NEW SECTION: Policy Watch -->
+                <div class="secondary-article">
+                    <h3 class="secondary-title">Policy Watch: The Electricity Act 2023</h3>
+                    <div class="body-text">
+                         <p>The decentralization of the Nigerian power sector marks a pivotal shift in energy governance. By allowing states to generate, transmit, and distribute electricity, the Act aims to break the centralized grid monopoly. For institutions like UNILAG, this opens the door to becoming self-sustaining energy hubs, utilizing embedded generation to power research labs and lecture halls without reliance on the unstable national grid.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Sidebar -->
+            <div class="sidebar">
+                
+                <!-- Research Snapshot -->
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-chart-line"></i> Research Snapshot</h3>
+                    <ul class="stat-list">
+                        <li>
+                            <i class="fas fa-arrow-down"></i>
+                            Global solar energy costs have fallen by over 80% in the last decade (IRENA).
+                        </li>
+                        <li>
+                            <i class="fas fa-bolt"></i>
+                            Decentralized renewables are the fastest way to expand access.
+                        </li>
+                        <li>
+                            <i class="fas fa-landmark"></i>
+                            Long-term policy stability attracts sustainable investment.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Key Takeaways -->
+                <div class="takeaways-card">
+                    <h3>Key Takeaways</h3>
+                    <ul class="check-list">
+                        <li>Renewable energy is critical to Nigeria’s power future.</li>
+                        <li>Decentralized systems bridge the electricity access gap.</li>
+                        <li>Policy, research, and technology must align for impact.</li>
+                    </ul>
+                </div>
+
+                <!-- Visual Placeholder (Graph) -->
+                <div style="background:#fff; height:120px; border:1px solid #ddd; padding:10px; display:flex; flex-direction:column; align-items:center;">
+                    <div style="font-family:'Montserrat'; font-size:8px; color:#555; width:100%; text-align:left; margin-bottom:5px;">$/kWh</div>
+                    <div style="display:flex; align-items:flex-end; gap:5px; height:80%; width:100%;">
+                        <!-- SVG Chart bars -->
+                         <div style="width:20%; height:90%; background:var(--se-navy); opacity:0.3; border-radius:2px 2px 0 0;"></div>
+                         <div style="width:20%; height:70%; background:var(--se-navy); opacity:0.5; border-radius:2px 2px 0 0;"></div>
+                         <div style="width:20%; height:50%; background:var(--se-teal); opacity:0.7; border-radius:2px 2px 0 0;"></div>
+                         <div style="width:20%; height:30%; background:var(--se-teal); border-radius:2px 2px 0 0;"></div>
+                         <div style="width:20%; height:20%; background:var(--se-yellow); border-radius:2px 2px 0 0;"></div>
+                    </div>
+                    <div style="font-family:'Montserrat'; font-size:8px; color:#777; width:100%; text-align:center; margin-top:5px; font-weight:bold;">Figure 1: Falling Solar Costs</div>
+                </div>
+                
+                <!-- NEW SECTION: Did You Know -->
+                <div class="sidebar-card" style="background:var(--se-teal);">
+                    <h3 style="color:white; border-bottom:1px solid rgba(255,255,255,0.3);">Did You Know?</h3>
+                    <p style="font-size:9px; line-height:1.4;">Nigeria has an estimated 427 GW of solar power potential. Harnessing just 1% could meet the entire nation's current demand.</p>
+                </div>
+                
+                 <!-- NEW SECTION: Events -->
+                <div class="events-card">
+                    <h3 class="secondary-title" style="font-size:11px; margin-bottom:8px;">UPCOMING EVENTS</h3>
+                    <div class="event-item">
+                        <div class="event-date">FEB 14, 2026</div>
+                        <div class="event-name">Green Tech Hackathon @ CIM Lab</div>
+                    </div>
+                    <div class="event-item" style="border-bottom:none;">
+                        <div class="event-date">FEB 28, 2026</div>
+                        <div class="event-name">Energy Career Fair</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- REFERENCES & FOOTER -->
+        <div class="references">
+            <strong>References:</strong> IRENA | IEA | Nigeria Renewable Energy Policy Reports | Electricity Act 2023
+        </div>
+
+        <footer>
+            <div class="footer-text">
+                Advancing research-driven solutions for a sustainable energy future.
+            </div>
+            <div class="social-icons">
+                STUDENT ENERGY UNILAG <i class="fab fa-linkedin"></i> <i class="fab fa-instagram"></i> <i class="fas fa-globe"></i>
+            </div>
+        </footer>
+
+    </div>
+
 </body>
 </html>
